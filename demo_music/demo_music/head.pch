@@ -1,0 +1,37 @@
+//
+//  head.pch
+//  demo_music
+//
+//  Created by tarena29 on 16/9/22.
+//  Copyright © 2016年 蒋强. All rights reserved.
+//
+
+#ifndef head_pch
+#define head_pch
+
+#import <YYKit.h>
+#import <MBProgressHUD.h>
+#import <BlocksKit.h>
+#import <AFNetworking.h>
+//和YYKit 有冲突 都是做图片的
+//#import <UIKit+AFNetworking.h>
+#import <MLTransition.h>
+#import <MJRefresh.h>
+#define MAS_SHORTHAND_GLOBALS
+#import <Masonry.h>
+#import <BlocksKit+UIKit.h>
+#import <iCarousel.h>
+#import <WMPageController.h>
+
+#import "NSString+Jq.h"
+#import "NSObject+Parse.h"
+#import "UIView+HUD.h"
+#import "UIScrollView+Refresh.h"
+#import "Constant.h"
+
+#import "NetManager.h"
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* head_pch */
