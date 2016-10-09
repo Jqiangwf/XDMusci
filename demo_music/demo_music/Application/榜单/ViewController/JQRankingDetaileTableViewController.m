@@ -9,6 +9,9 @@
 #import "JQRankingDetaileTableViewController.h"
 #import "JQRankingDetailTableViewCell.h"
 #import "JQRankingDetailModel.h"
+@import AVKit;
+@import MediaPlayer;
+@import AVFoundation;
 @interface JQRankingDetaileTableViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) JQRankingDetailModel *model;
@@ -23,7 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //最底层
-     [self topIv];
+    [self topIv];
     //次底层
     [self.tableView registerClass:[JQRankingDetailTableViewCell class] forCellReuseIdentifier:@"cell"];
     MJWeakSelf
@@ -38,7 +41,7 @@
                 [weakSelf naviView];
                 //最表层
                 [weakSelf backBtn];
-               [weakSelf.topIv setImageURL:weakSelf.model.billboard.pic_s640.jq_URL];
+                [weakSelf.topIv setImageURL:weakSelf.model.billboard.pic_s640.jq_URL];
                 
                 weakSelf.tableView.tableHeaderView = weakSelf.headerView;
                 weakSelf.tableView.backgroundColor = [UIColor clearColor];
@@ -51,7 +54,8 @@
     }];
     [self.tableView beginHeaderRefresh];
     self.tableView.backgroundColor = [UIColor clearColor];
-    
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
     
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -92,7 +96,7 @@
         att.image = [UIImage imageNamed:@"bt_playlist_download_normal"];
         NSAttributedString *str = [NSAttributedString attributedStringWithAttachment:att];
         cell.detailTextLabel.attributedText = str;
-    
+        
         return cell;
     }
     
@@ -119,6 +123,22 @@
     [cell setNameLbWithSq:sq MV:mv K:k name:model.artist_name];
     
     return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    RankingDetailSongListModel *model = self.model.song_list[indexPath.row];
+    [NetManager getSongID:model.song_id handler:^(JQSongModel *model, NSError *error) {
+        [self.tableView showHUD];
+        NSURL *url = model.songurl.url[1].file_link.jq_URL;
+        MPMoviePlayerViewController *mpVC = [[MPMoviePlayerViewController alloc]initWithContentURL:url];
+        [self presentViewController:mpVC animated:YES completion:^{
+            //moviePlayer 控制播放起
+            [mpVC.moviePlayer play];
+            [self.tableView hideHUD];
+        }];
+    }];
+ 
+    
+    
 }
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return UITableViewAutomaticDimension;
@@ -255,8 +275,8 @@
 }
 
 - (UIButton *)backBtn {
-	if(_backBtn == nil) {
-		_backBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    if(_backBtn == nil) {
+        _backBtn = [UIButton buttonWithType:UIButtonTypeSystem];
         [self.view addSubview:_backBtn];
         [_backBtn addTarget:self action:@selector(backLastVC:) forControlEvents:UIControlEventTouchUpInside];
         UIImage *image =[[UIImage imageNamed:@"ic_recommend_back_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -265,8 +285,8 @@
             make.left.equalTo(10);
             make.top.equalTo(28);
         }];
-	}
-	return _backBtn;
+    }
+    return _backBtn;
 }
 - (void)backLastVC:(UIButton *)btn{
     [self.navigationController popViewControllerAnimated:YES];

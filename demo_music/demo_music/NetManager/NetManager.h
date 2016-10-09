@@ -16,7 +16,8 @@
 #import "JQRadioModel.h"
 #import "JQRadioCategoryModel.h"
 #import "JQRecommendModel.h"
-
+#import "JQSongModel.h"
+#import "JQAllSingModel.h"
 @interface NetManager : BaseNetWorking
 
 + (id)getPage:(NSInteger)page handler:(void(^)(SongListModel *model,NSError *error))handler;
@@ -26,6 +27,8 @@
 + (id)getRankingDetail:(NSInteger)type handler:(void(^)(JQRankingDetailModel *model,NSError *error))handler;
 + (id)getRadioHandler:(void(^)(JQRadioModel *model,NSError *error))handler;
 + (id)getRadioCategory:(NSInteger)ID handler:(void(^)(JQRadioCategoryModel *model,NSError *error))handler;
++ (id)getRadioCategoryHandler:(void(^)(JQRadioCategoryModel *model,NSError *error))handler;
 + (id)getRecommendHandler:(void(^)(JQRecommendModel *model,NSError *error))handler;
-
++ (id)getSongID:(NSString *)songID handler:(void(^)(JQSongModel *model,NSError *error))handler;
++ (id)getAllSingHandler:(void(^)(JQAllSingModel *model,NSError *error))handler;
 @end

@@ -10,4 +10,5 @@
 
 @interface BaseNetWorking : NSObject
 + (id)GET:(NSString *)path parameters:(NSDictionary *)parameters handler:(void(^)(id response , NSError *error))handler;
+
 @end

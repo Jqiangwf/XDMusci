@@ -43,8 +43,13 @@
 		7288DCE51D98B18300105CDC /* JQRadioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288DCE41D98B18300105CDC /* JQRadioViewController.m */; };
 		7288DCE81D99141A00105CDC /* JQRadioCategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288DCE71D99141A00105CDC /* JQRadioCategoryModel.m */; };
 		7288DCEB1D991AFF00105CDC /* JQRecommendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7288DCEA1D991AFF00105CDC /* JQRecommendModel.m */; };
+		72A7F0C51D9E11BE001EA32F /* JQSongModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 72A7F0C41D9E11BE001EA32F /* JQSongModel.m */; };
 		72B6304F1D9501D500F907BE /* JQSingAdverModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 72B6304E1D9501D500F907BE /* JQSingAdverModel.m */; };
 		72B630521D95036E00F907BE /* JQSingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72B630511D95036E00F907BE /* JQSingTableViewController.m */; };
+		72BD4BD51DA882EE00F36A59 /* JQSingStaticCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72BD4BD41DA882EE00F36A59 /* JQSingStaticCollectionViewCell.m */; };
+		72BD4BD81DA8876000F36A59 /* JQSingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72BD4BD71DA8876000F36A59 /* JQSingTableViewCell.m */; };
+		72BD4BDB1DA893DD00F36A59 /* JQAllSongTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72BD4BDA1DA893DD00F36A59 /* JQAllSongTableViewCell.m */; };
+		72C63BBD1D9CEE2800C1C4BE /* JQAllSingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 72C63BBC1D9CEE2800C1C4BE /* JQAllSingModel.m */; };
 		72FDE9B31D9949CB00919935 /* JQRecommendSongListCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FDE9B21D9949CB00919935 /* JQRecommendSongListCollectionViewCell.m */; };
 		72FDE9B61D99503B00919935 /* JQRecommendNewSongCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FDE9B51D99503B00919935 /* JQRecommendNewSongCollectionViewCell.m */; };
 		72FDE9B91D9952CE00919935 /* JQRecommendTodayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FDE9B81D9952CE00919935 /* JQRecommendTodayTableViewCell.m */; };
@@ -126,10 +131,20 @@
 		7288DCE71D99141A00105CDC /* JQRadioCategoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JQRadioCategoryModel.m; sourceTree = "<group>"; };
 		7288DCE91D991AFF00105CDC /* JQRecommendModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JQRecommendModel.h; sourceTree = "<group>"; };
 		7288DCEA1D991AFF00105CDC /* JQRecommendModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JQRecommendModel.m; sourceTree = "<group>"; };
+		72A7F0C31D9E11BE001EA32F /* JQSongModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JQSongModel.h; sourceTree = "<group>"; };
+		72A7F0C41D9E11BE001EA32F /* JQSongModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JQSongModel.m; sourceTree = "<group>"; };
 		72B6304D1D9501D500F907BE /* JQSingAdverModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JQSingAdverModel.h; sourceTree = "<group>"; };
 		72B6304E1D9501D500F907BE /* JQSingAdverModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JQSingAdverModel.m; sourceTree = "<group>"; };
 		72B630501D95036E00F907BE /* JQSingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JQSingTableViewController.h; sourceTree = "<group>"; };
 		72B630511D95036E00F907BE /* JQSingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JQSingTableViewController.m; sourceTree = "<group>"; };
+		72BD4BD31DA882EE00F36A59 /* JQSingStaticCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JQSingStaticCollectionViewCell.h; sourceTree = "<group>"; };
+		72BD4BD41DA882EE00F36A59 /* JQSingStaticCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JQSingStaticCollectionViewCell.m; sourceTree = "<group>"; };
+		72BD4BD61DA8876000F36A59 /* JQSingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JQSingTableViewCell.h; sourceTree = "<group>"; };
+		72BD4BD71DA8876000F36A59 /* JQSingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JQSingTableViewCell.m; sourceTree = "<group>"; };
+		72BD4BD91DA893DD00F36A59 /* JQAllSongTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JQAllSongTableViewCell.h; sourceTree = "<group>"; };
+		72BD4BDA1DA893DD00F36A59 /* JQAllSongTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JQAllSongTableViewCell.m; sourceTree = "<group>"; };
+		72C63BBB1D9CEE2800C1C4BE /* JQAllSingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JQAllSingModel.h; sourceTree = "<group>"; };
+		72C63BBC1D9CEE2800C1C4BE /* JQAllSingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JQAllSingModel.m; sourceTree = "<group>"; };
 		72FDE9B11D9949CB00919935 /* JQRecommendSongListCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JQRecommendSongListCollectionViewCell.h; sourceTree = "<group>"; };
 		72FDE9B21D9949CB00919935 /* JQRecommendSongListCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JQRecommendSongListCollectionViewCell.m; sourceTree = "<group>"; };
 		72FDE9B41D99503B00919935 /* JQRecommendNewSongCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JQRecommendNewSongCollectionViewCell.h; sourceTree = "<group>"; };
@@ -278,6 +293,8 @@
 			children = (
 				72B6304D1D9501D500F907BE /* JQSingAdverModel.h */,
 				72B6304E1D9501D500F907BE /* JQSingAdverModel.m */,
+				72C63BBB1D9CEE2800C1C4BE /* JQAllSingModel.h */,
+				72C63BBC1D9CEE2800C1C4BE /* JQAllSingModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -285,6 +302,12 @@
 		7256555A1D93C06300B378A4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				72BD4BD31DA882EE00F36A59 /* JQSingStaticCollectionViewCell.h */,
+				72BD4BD41DA882EE00F36A59 /* JQSingStaticCollectionViewCell.m */,
+				72BD4BD61DA8876000F36A59 /* JQSingTableViewCell.h */,
+				72BD4BD71DA8876000F36A59 /* JQSingTableViewCell.m */,
+				72BD4BD91DA893DD00F36A59 /* JQAllSongTableViewCell.h */,
+				72BD4BDA1DA893DD00F36A59 /* JQAllSongTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -373,6 +396,8 @@
 				725655871D93DB1C00B378A4 /* JQRankingListModel.m */,
 				7227555E1D96592400EAEE25 /* JQRankingDetailModel.h */,
 				7227555F1D96592400EAEE25 /* JQRankingDetailModel.m */,
+				72A7F0C31D9E11BE001EA32F /* JQSongModel.h */,
+				72A7F0C41D9E11BE001EA32F /* JQSongModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -665,12 +690,14 @@
 				725655741D93C06300B378A4 /* SongListModel.m in Sources */,
 				722755631D9666E900EAEE25 /* JQRankingDetailTableViewCell.m in Sources */,
 				7202936C1D9A9878004F3E21 /* JQRecommendHeaderCollectionReusableView.m in Sources */,
+				72BD4BDB1DA893DD00F36A59 /* JQAllSongTableViewCell.m in Sources */,
 				7256554D1D936E2300B378A4 /* BaseNetWorking.m in Sources */,
 				722755601D96592400EAEE25 /* JQRankingDetailModel.m in Sources */,
 				725655441D936C3700B378A4 /* NSObject+Parse.m in Sources */,
 				7256558B1D93DDE000B378A4 /* JQRankingListTableViewController.m in Sources */,
 				725655471D936CD800B378A4 /* NSString+Jq.m in Sources */,
 				720293691D9A6CD4004F3E21 /* JQRecommendCollectionViewController.m in Sources */,
+				72C63BBD1D9CEE2800C1C4BE /* JQAllSingModel.m in Sources */,
 				7288DCDC1D98AEC400105CDC /* JQRadioModel.m in Sources */,
 				72FDE9B31D9949CB00919935 /* JQRecommendSongListCollectionViewCell.m in Sources */,
 				7288DCE51D98B18300105CDC /* JQRadioViewController.m in Sources */,
@@ -680,12 +707,15 @@
 				7256559A1D941C9700B378A4 /* JQSingerTableViewController.m in Sources */,
 				7256558E1D93F1A500B378A4 /* JQSongListCollectionViewController.m in Sources */,
 				72FDE9B91D9952CE00919935 /* JQRecommendTodayTableViewCell.m in Sources */,
+				72A7F0C51D9E11BE001EA32F /* JQSongModel.m in Sources */,
+				72BD4BD81DA8876000F36A59 /* JQSingTableViewCell.m in Sources */,
 				725655251D93699000B378A4 /* AppDelegate.m in Sources */,
 				7288DCE81D99141A00105CDC /* JQRadioCategoryModel.m in Sources */,
 				7288DCEB1D991AFF00105CDC /* JQRecommendModel.m in Sources */,
 				725655221D93699000B378A4 /* main.m in Sources */,
 				72B630521D95036E00F907BE /* JQSingTableViewController.m in Sources */,
 				725655771D93C1A400B378A4 /* AppDelegate+Custom.m in Sources */,
+				72BD4BD51DA882EE00F36A59 /* JQSingStaticCollectionViewCell.m in Sources */,
 				7202936F1D9AB422004F3E21 /* JQRecommendProprietaryCollectionViewCell.m in Sources */,
 				725655911D93F40A00B378A4 /* JQSongListCollectionViewCell.m in Sources */,
 				725655801D93C55700B378A4 /* JQPageViewController.m in Sources */,
@@ -753,7 +783,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -791,7 +821,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

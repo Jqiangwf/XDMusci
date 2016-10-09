@@ -17,6 +17,10 @@
 @property (nonatomic) JQRadioModel *model;
 @property (nonatomic) JQRadioCategoryModel *categoryModel;
 @property (nonatomic) NSInteger selNum;
+@property (nonatomic) NSMutableDictionary *dataDic;
+
+
+
 @end
 
 @implementation JQRadioViewController
@@ -32,11 +36,10 @@
         }else{
             self.model = model;
             [self.tableView reloadData];
-//            [self.collectionView reloadData];
         }
         
     }];
-    [NetManager getRadioCategory:self.selNum handler:^(JQRadioCategoryModel *model, NSError *error) {
+    [NetManager getRadioCategoryHandler:^(JQRadioCategoryModel *model, NSError *error) {
         if (error) {
             NSLog(@"%@",error);
         }else{
@@ -54,14 +57,23 @@
 
 #pragma mark - tableView dataSource
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.model.result.count;
+    return self.model.result.count + 1;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    RadioResultModel *model = self.model.result[indexPath.row];
+    if (self.model)
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"推荐";
+            cell.textLabel.textColor = [UIColor colorWithRed:0.522 green:0.525 blue:0.529 alpha:1.000];
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+            indexPath.row == _selNum ? cell.textLabel.textColor = [UIColor colorWithRed:0.306 green:0.604 blue:0.973 alpha:1.000] : nil;
+            return cell;
+        }
+    
+    RadioResultModel *model = self.model.result[indexPath.row - 1];
     cell.textLabel.text = model.category_name;
     cell.textLabel.textColor = [UIColor colorWithRed:0.522 green:0.525 blue:0.529 alpha:1.000];
     cell.textLabel.textAlignment = NSTextAlignmentCenter;
@@ -78,25 +90,50 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     self.selNum = indexPath.row;
     [tableView reloadData];
+    if (self.dataDic[@(indexPath.row)]) {
+        [self.collectionView reloadData];
+        return;
+    }
     
-    [NetManager getRadioCategory:self.selNum handler:^(JQRadioCategoryModel *model, NSError *error) {
-        if (error) {
-            NSLog(@"%@",error);
-        }else{
-            self.categoryModel = model;
-            [self.collectionView reloadData];
-        }
-    }];
-    [self.collectionView reloadData];
+    if (indexPath.row == 0) {
+        [NetManager getRadioCategoryHandler:^(JQRadioCategoryModel *model, NSError *error) {
+            if (error) {
+                NSLog(@"%@",error);
+            }else{
+                self.categoryModel = model;
+                [self.dataDic setObject:model forKey:@(indexPath.row)];
+                [self.collectionView reloadData];
+            }
+        }];
+    }else{
+     
+        [NetManager getRadioCategory:self.selNum - 1 handler:^(JQRadioCategoryModel *model, NSError *error) {
+            if (error) {
+                NSLog(@"%@",error);
+            }else{
+                self.categoryModel = model;
+                [self.dataDic setObject:model forKey:@(indexPath.row)];
+                [self.collectionView reloadData];
+            }
+        }];
+    
+    }
 }
 
 #pragma mark - collectionView dataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    if (self.dataDic[@(_selNum)])
+      return ((JQRadioCategoryModel *)self.dataDic[@(_selNum)]).result.count;
     return self.categoryModel.result.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     __weak JQRadioCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"collectionCell" forIndexPath:indexPath];
-    RadioCategoryResultModel *model = self.categoryModel.result[indexPath.item];
+    RadioCategoryResultModel *model;
+    if (!self.dataDic[@(_selNum)]){
+        model = self.categoryModel.result[indexPath.item];
+    }else{
+        model = ((JQRadioCategoryModel *)self.dataDic[@(_selNum)]).result[indexPath.item];
+    }
     [cell.iconIv setImageWithURL:model.icon_ios.jq_URL placeholder:[UIImage imageNamed:@"ad_play_cover_pic_bg"] options:YYWebImageOptionShowNetworkActivity completion:^(UIImage * _Nullable image, NSURL * _Nonnull url, YYWebImageFromType from, YYWebImageStage stage, NSError * _Nullable error) {
         cell.iconIv.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         cell.iconIv.tintColor = [UIColor colorWithRed:0.490 green:0.686 blue:0.902 alpha:1.000];
@@ -153,5 +190,10 @@
 	}
 	return _collectionView;
 }
-
+- (NSMutableDictionary *)dataDic{
+    if (!_dataDic) {
+        _dataDic = [NSMutableDictionary dictionary];
+    }
+    return _dataDic;
+}
 @end

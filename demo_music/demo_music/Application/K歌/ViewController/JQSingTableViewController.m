@@ -8,13 +8,19 @@
 
 #import "JQSingTableViewController.h"
 #import "JQSingAdverModel.h"
+#import "JQSingTableViewCell.h"
+#import "JQAllSongTableViewCell.h"
 @interface JQSingTableViewController ()<iCarouselDelegate,iCarouselDataSource>
 @property (nonatomic) JQSingAdverModel *model;
-
 @property (nonatomic) iCarousel *ic;
 @property (nonatomic) UIPageControl *pc;
 @property (nonatomic) UIView *headerView;
 @property (nonatomic) NSTimer *timer;
+
+@property (nonatomic) JQAllSingModel *singModel;
+
+@property (nonatomic) NSTimer *countTimer;
+@property (nonatomic) NSInteger count;
 @end
 
 @implementation JQSingTableViewController
@@ -45,14 +51,21 @@
 #pragma mark - life
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     self.tableView.tableFooterView = [UIView new];
+    [self.tableView registerClass:[JQAllSongTableViewCell class] forCellReuseIdentifier:@"songCell"];
+    [self.tableView registerClass:[JQSingTableViewCell class] forCellReuseIdentifier:@"cell"];
     MJWeakSelf
     [self.tableView addHeaderRefresh:^{
+        __block int count = 2;
         [weakSelf.timer invalidate];
+        //头部视图
         [NetManager getSingAdverHandler:^(JQSingAdverModel *model, NSError *error) {
             if (error) {
                 weakSelf.tableView.tableHeaderView = nil;
             }else{
+                count --;
                 weakSelf.tableView.tableHeaderView = weakSelf.headerView;
                 weakSelf.model = model;
                 weakSelf.pc.numberOfPages = model.result.count;
@@ -62,8 +75,36 @@
                     [weakSelf.ic scrollToItemAtIndex:weakSelf.ic.currentItemIndex + 1 duration:1];
                 } repeats:YES];
             }
-            [weakSelf.tableView endHeaderRefresh];
+            if (count == 0) {
+                [weakSelf.tableView endHeaderRefresh];
+            }
         }];
+        //大家都在唱
+        [NetManager getAllSingHandler:^(JQAllSingModel *model, NSError *error) {
+            [weakSelf.countTimer invalidate];
+            if (error) {
+                NSLog(@"%@",error);
+            }else{
+                count --;
+                NSLog(@"%@",model.result.items);
+                weakSelf.singModel = model;
+                weakSelf.count = 10;
+                weakSelf.countTimer = [NSTimer bk_scheduledTimerWithTimeInterval:3 block:^(NSTimer *timer) {
+                    weakSelf.count ++;
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:2];
+                    [weakSelf.tableView insertRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationTop];
+                    if (weakSelf.count == self.singModel.result.items.count) {
+                        [weakSelf.countTimer invalidate];
+                    }
+                } repeats:YES];
+                [weakSelf.tableView reloadData];
+            }
+            if (count == 0) {
+                [weakSelf.tableView endHeaderRefresh];
+            }
+        }];
+        
+        
     }];
     [self.tableView beginHeaderRefresh];
 }
@@ -76,44 +117,65 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
+    if (section == 2) {
+        return self.count;
+    }
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 5;
 }
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 5;
-}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //    if (indexPath.section == 0) {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseIdentifier"];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reuseIdentifier"];
+    if (indexPath.section == 0) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseIdentifier"];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reuseIdentifier"];
+        }
+        cell.accessoryType = 1;
+        NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:@""];
+        NSTextAttachment *att = [NSTextAttachment new];
+        att.image = [UIImage imageNamed:@"bt_more_ok_normal"];
+        att.bounds = CGRectMake(0, -13, 40, 40);
+        NSAttributedString *imgstr = [NSAttributedString attributedStringWithAttachment:att];
+        [str appendAttributedString:imgstr];
+        NSAttributedString *textStr = [[NSAttributedString alloc]initWithString:@"   我的K歌"];
+        [str appendAttributedString:textStr];
+        
+        cell.textLabel.attributedText = str;
+        return cell;
+    }else if (indexPath.section == 1){
+        JQSingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        [cell collectionView];
+        cell.titleLb.text = @"大家都在唱";
+        return cell;
+    }else{
+        JQAllSongTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"songCell" forIndexPath:indexPath];
+        JQAllSingResultItemsModel *model = self.singModel.result.items[self.singModel.result.items.count - self.count + indexPath.row ];
+        [cell.iconIv setImageURL:model.picture_300_300.jq_URL];
+        cell.titleLb.text = [NSString stringWithFormat:@"%@-%@",model.song_title,model.artist_name];
+        cell.countLb.text = [NSString stringWithFormat:@"%@人唱过",model.play_num];
+        [cell singbtn];
+        return cell;
     }
-    cell.accessoryType = 1;
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:@""];
-    NSTextAttachment *att = [NSTextAttachment new];
-    att.image = [UIImage imageNamed:@"bt_more_ok_normal"];
-    att.bounds = CGRectMake(0, -13, 40, 40);
-    NSAttributedString *imgstr = [NSAttributedString attributedStringWithAttachment:att];
-    [str appendAttributedString:imgstr];
-    NSAttributedString *textStr = [[NSAttributedString alloc]initWithString:@"   我的K歌"];
-    [str appendAttributedString:textStr];
-    
-    cell.textLabel.attributedText = str;
-    return cell;
-    //    }
     
     
     //    return nil;
 }
-
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 1) {
+        return 340;
+    }else if(indexPath.section == 2){
+        return 65;
+    }
+    else{
+        return 44;
+    }
+}
 
 /*
  // Override to support conditional editing of the table view.
@@ -185,7 +247,6 @@
     }
     return _headerView;
 }
-
 
 
 @end
